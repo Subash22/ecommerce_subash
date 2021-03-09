@@ -1,0 +1,115 @@
+{% extends "includes/base.html" %}
+{% block title %} Search {% endblock %}
+{% block header %} Search Product {% endblock %}
+{% block content %}
+
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg">
+    <div>
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link text-dark" href="/">All</a>
+            </li>
+            {% for category in categories %}
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/?category={{category.id}}">{{category.name}}</a>
+            </li>
+            {% endfor %}
+
+            {% for brand in brands %}
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/?brand={{brand.id}}">{{brand.name}}</a>
+            </li>
+            {% endfor %}
+
+        </ul>
+        <!-- Links -->
+    </div>
+    <div>
+        <form class="form-inline" method="POST">
+            {% csrf_token %}
+            <div>
+                <input name="query" class="form-control" type="text"
+                       placeholder="Search/enter price-range" aria-label="Search"
+                       value="{{search_query}}">
+            </div>
+        </form>
+    </div>
+</nav>
+
+<!--/.Navbar-->
+{% for product in products %}
+<div class="row border bg-light">
+    <div class="col-md-4">
+        <div class="text-center">
+            <img src="{{ product.image_url }}"
+                 style="height:200px; width:auto;" alt="{{ product.name }}">
+        </div>
+    </div>
+    <div class="col-md-3">
+    <span class="btn btn-danger
+    disabled">{{ product.brand.name }}</span>
+        <span class="btn btn-info
+    disabled">{{ product.category.name }}</span>
+        <h3>{{ product.name }}</h3>
+        <h4 class="bold text-secondary">
+            <strong>NRs. {{ product.price }}</strong>
+        </h4>
+
+        <form class="d-flex" action="/cart" method="GET">
+            <!-- Default input -->
+            <input type="hidden" name="id"
+                   value="{{product.id}}"/>
+
+            <input type="number" name="qty" value="1" aria-
+                   label="Search" class="form-control" style="width: 100px">
+
+            <button id="btn-add-to-cart" class="btn btn-primary
+
+    btn-md" type="submit" data-toggle="modal" data-target="#cart-
+    model">Add to cart
+            </button>
+        </form>
+
+    </div>
+    <div class="col-md-5">
+        <table class="table table-sm">
+            <tr>
+                <td>Available Quantity</td>
+                <td>{{product.quantity}}</td>
+            </tr>
+            <tr>
+                <td>Color Code</td>
+                <td>
+                    <div style="height: 25px; width: 25px;
+    background-color: {{ product.color_code }};"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>Brand</td>
+                <td>{{ product.brand.name }}</td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td>{{ product.category.name }}</td>
+            </tr>
+            <tr>
+                <td>Registered On</td>
+                <td>{{ product.registered_on }}</td>
+            </tr>
+            <tr>
+                <td>Is Active</td>
+                <td>
+                    {% if product.is_active %}
+                    <input type="checkbox" checked disabled/>
+                    {% else %}
+                    <input type="checkbox" disabled/>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

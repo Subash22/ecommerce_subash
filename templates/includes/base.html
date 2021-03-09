@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>{% block title %} Electronics Commerce {% endblock %}</title>
+    <style type="text/css">
+    .min-h-100 { min-height: 100%; }
+    </style>
+</head>
+
+<body>
+<div class="row">
+    <div id="header" class="bg-info col-sm-12 col-md-12 col-lg-12">
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <img src="https://img.favpng.com/23/7/24/logo-e-commerce-digital-marketing-brand-trade-png-favpng-xTcxcPuHCYQBUh9P8q30ETQji.jpg"
+                     alt="E-commerce Logo" style="height:50px; width:auto;"/>
+            </div>
+            <div class="col-sm-7 col-md-7 col-lg-7">
+                <h2>
+                    {% block header %} Electronic Commerce {% endblock %}
+                </h2>
+            </div>
+            <div class="col-sm-1 col-md-1 col-lg-1">
+
+                <a class="btn btn-success btn-sm ml-3" href="/cart">
+
+                    <span>Cart</span>
+                    <span class="badge badge-light">
+                    <label id="cart_qty">{{ cart_items|length }}</label>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div id="sidebar" class="min-h-100 min-h-800 bg-light border col-
+    sm-3 col-md-3 col-lg-3">
+
+        {% block sidebar %}
+        <ul>
+            <li><a href="/admin/">Admin</a></li>
+            <li><a href="/">Product</a></li>
+        </ul>
+        {% endblock %}
+    </div>
+
+    <div id="content" class="min-h-100 bg-light col-sm-9 col-md-9 col-
+    lg-9">
+
+        {% block content %}{% endblock %}
+    </div>
+</div>
+</body>
+</html>

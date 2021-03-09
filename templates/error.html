@@ -1,0 +1,12 @@
+{% extends "includes/base.html" %}
+{% block title %}Fail{% endblock %}
+{% block header %}
+<h2>Payment Failed</h2>
+{% endblock %}
+{% block content %}
+<h3 class="text-danger">{{ message }}</h3>
+<p>Please check your token or amount then retry. If issue still exist, contact your admin!</p>
+<p>
+    <a class="btn btn-info" href="/cart">View cart and retry payment</a>
+</p>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "includes/base.html" %}
+{% block title %} Cart {% endblock %}
+{% block header %} Your Cart {% endblock %}
+{% block content %}
+{% if cart_items %}
+<div class="row">
+    <h4 class="col-sm-12 col-md-12 col-lg-12">
+        <span class="text-muted">Your cart</span>
+
+        <span class="badge badge-secondary badge-
+pill">{{cart_items|length}}</span>
+
+    </h4>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in cart_items %}
+    <tr>
+        <td><img height="50" width="50"
+                 src="{{ item.product.image_url }}"></td>
+        <td>{{ item.product.name }}</td>
+        <td><h5>NRs. {{ item.product.price }}</h5></td>
+        <td><h5>{{ item.quantity }}</h5></td>
+        <td>
+            <form method="post"
+                  action="/cart/remove/{{item.product.id}}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger"
+                        type="submit">Remove
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+    <tr>
+        <td></td>
+        <td style="text-align: right;"><h3>Total Price:</h3></td>
+        <td><h3>NRs. {{ total }}</h3></td>
+        <td>
+            <form method="post" action="/payment/checkout/">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control"
+                           name="token" placeholder="Token"/>
+                    <input type="hidden" name="amount"
+                           value="{{ total }}"/>
+                    <button type="submit" class="btn btn-primary"
+                            type="submit">Checkout Payment
+                    </button>
+                </div>
+            </form>
+        </td>
+        <td>
+
+            <button onclick="location.href='/';" class="btn btn-
+info">Back to shop!
+            </button>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% else %}
+<h2>No product added to cart.</h2>
+<button onclick="location.href='/';" class="btn btn-info">Back
+    to shop!
+</button>
+{% endif %}
+{% endblock %}
