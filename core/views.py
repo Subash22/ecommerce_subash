@@ -20,7 +20,9 @@ def index(request):
 
         categories = Category.objects.all()
         brands = Brand.objects.all()
-        cart_items = CartItem.objects.filter(user=request.user)
+        cart_items = 0
+        if request.user.is_authenticated:
+            cart_items = CartItem.objects.filter(user=request.user)
         context = {
             'products': products,
             'categories': categories,
